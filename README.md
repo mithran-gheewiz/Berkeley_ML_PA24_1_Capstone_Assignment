@@ -24,7 +24,7 @@ Similarly, I also randomly sampled 30,000 rows from the test data sets with the 
 | ----------------------------------------- | ------- | --------- | ------ | -------- |
 | **VotingClassifier (HARD)**               | 0.6680  | 0.0000    | 0.0000 | 0.0000   |
 | **VotingClassifier (SOFT, 0.50)**         | 0.6680  | 0.0293    | 0.2743 | 0.0530   |
-| **VotingClassifier (SOFT, best-F1=0.70)** | 0.6680  | 0.1176    | 0.2301 | 0.1557   |
+| **VotingClassifier (SOFT, best-F1=0.70)** | **0.6680  | 0.1176    | 0.2301 | 0.1557 **  |
 | **XGBoost (0.50)**                        | 0.5753  | 0.2667    | 0.0331 | 0.0588   |
 | **XGBoost (best-F1=0.60)**                | 0.5753  | 0.3333    | 0.0331 | 0.0602   |
 | **Random Forest (0.50)**                  | 0.5837  | 0.0000    | 0.0000 | 0.0000   |
