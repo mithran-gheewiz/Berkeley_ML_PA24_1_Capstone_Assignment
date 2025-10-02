@@ -30,6 +30,28 @@ Similarly, I also randomly sampled 30,000 rows from the test data sets with the 
 | **Random Forest (0.50)**                  | 0.5837  | 0.0000    | 0.0000 | 0.0000   |
 | **Random Forest (best-F1=0.24)**          | 0.5837  | 0.0274    | 0.0744 | 0.0401   |
 
+VotingClassifier (SOFT, best-F1 threshold=0.70) performed best overall, achieving the highest F1 score (0.1557).
+The confusion matrix shows [TN=19674, FP=195, FN=87, TP=26].
+This means it successfully caught more true positives compared to other models, while keeping false positives relatively low.
+Although the recall (0.23) is not high, it’s meaningfully better than XGBoost and RandomForest.
+XGBoost had higher precision (0.3333 at threshold=0.60), but recall was very low (0.0331).
+Its confusion matrix [TN=19856, FP=8, FN=117, TP=4] shows it rarely misclassified negatives (very few FPs), but it missed almost all positives.
+This makes XGBoost too conservative — it predicts almost everything as negative, leading to low recall.
+Random Forest underperformed in both precision and recall.  Even at its best threshold (0.24), the F1 score was only 0.0401.
+Its confusion matrix [TN=19545, FP=319, FN=112, TP=9] shows it allowed more false positives than XGBoost but still failed to capture enough true positives.
+
+## Why the VotingClassifier (SOFT) Outperformed XGBoost and Random Forest
+
+One of the main reasons the VotingClassifier (SOFT) outperformed XGBoost and Random Forest is the issue of class imbalance. In the dataset, the number of positive cases is much smaller than the number of negatives. Both Random Forest and XGBoost tend to optimize for accuracy and AUC, which often means predicting “negative” most of the time. This strategy minimizes errors overall but comes at the cost of missing true positives. As a result, their confusion matrices show very few false positives but also almost no true positives, making them overly conservative. For example, XGBoost at threshold 0.60 produced a confusion matrix of [TN=19856, FP=8, FN=117, TP=4], which means it only detected 4 true positives. Precision was relatively high, but recall collapsed to almost zero.
+
+Another advantage of the VotingClassifier (SOFT) lies in probability averaging. By combining Logistic Regression and Decision Tree models with a 1:3 weight, the soft voter averages their probability outputs. Logistic regression contributes smoother, more continuous probability estimates, while decision trees provide sharper splits that can highlight specific patterns. When averaged together, the resulting probability distribution is less extreme than those produced by XGBoost or Random Forest. This makes threshold tuning more effective. At a threshold of 0.70, the soft voter identified 26 true positives with a reasonable precision level, striking a better balance between precision and recall than the other methods.
+
+A further reason is the contrast between overfitting and simplicity. XGBoost and Random Forest are highly flexible models, which makes them powerful but also prone to overfitting, especially when data is noisy or features are sparse. In cases where the true signal is weak — as often happens with imbalanced datasets — these models may fail to generalize and instead fall back on predicting negatives. In contrast, Logistic Regression and Decision Tree, while simpler, are complementary in nature. Together in a soft voter, they can be more robust and capture meaningful signals that the more complex models overlook.
+
+Finally, threshold tuning played a key role. The performance of the VotingClassifier improved substantially when the threshold was adjusted from the default 0.50 to the best-F1 threshold of 0.70. This adjustment helped the model capture more positives without overwhelming the system with false positives. XGBoost and Random Forest did not benefit as much from threshold tuning because their predicted probabilities were already heavily skewed toward negatives, leaving little flexibility.
+
+In summary, while XGBoost and Random Forest are generally strong learners, in this particular imbalanced setting they behaved like “all negative” classifiers — protecting precision but sacrificing recall. The VotingClassifier (SOFT), by averaging two weaker but diverse models, created a smoother probability landscape. This allowed for better threshold adjustments, enabling it to capture a meaningful number of positives while keeping false positives under control.
+
 
 ## Data Acquisition
 
