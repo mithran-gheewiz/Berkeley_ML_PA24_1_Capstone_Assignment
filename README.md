@@ -17,10 +17,32 @@ Similarly, I also randomly sampled 30,000 rows from the test data sets with the 
 
 ## Model Outcomes or Predictions
 
+### Table 1. Model Outcomes for Different models used (VotingClassifier, XGBoost, and RandomForest)
+### Caption: The best model surprisingly is VotingClassifier (SOFT, best-F1=0.70) compared it to the other Ensemble Models
+
+| Model / Threshold Setting                 | AUC-ROC | Precision | Recall | F1 Score |
+| ----------------------------------------- | ------- | --------- | ------ | -------- |
+| **VotingClassifier (HARD)**               | 0.6680  | 0.0000    | 0.0000 | 0.0000   |
+| **VotingClassifier (SOFT, 0.50)**         | 0.6680  | 0.0293    | 0.2743 | 0.0530   |
+| **VotingClassifier (SOFT, best-F1=0.70)** | 0.6680  | 0.1176    | 0.2301 | 0.1557   |
+| **XGBoost (0.50)**                        | 0.5753  | 0.2667    | 0.0331 | 0.0588   |
+| **XGBoost (best-F1=0.60)**                | 0.5753  | 0.3333    | 0.0331 | 0.0602   |
+| **Random Forest (0.50)**                  | 0.5837  | 0.0000    | 0.0000 | 0.0000   |
+| **Random Forest (best-F1=0.24)**          | 0.5837  | 0.0274    | 0.0744 | 0.0401   |
+
+
 ## Data Acquisition
 
 ## Data Preprocessing/Preparation
 
 ## Modeling
+In the first part of the Capstone Project, I use the following baseline models in the analysis:
+
+Logistic regression model - L1 regularization
+Decision tree model (Tree depth (n=5))
+Hyper parameter tuning for both logistic regression and decision tree
+When I first started out, the baseline model did not converge. Then, I performed dimensionality reduction before the classifier (often best for OHE-heavy data) and reran the program and its still running after 12 hours without completing the kernal. I determined that the bottlenecks are: (1) refitting OHE+SVD inside every CV fold, (2) too many candidates/folds, and (3) using a heavy solver on high-dim data. To make it run faster, I did the following: Tune on a stratified subset (30k rows), then refit best params on the full 100k. Use HalvingRandomSearchCV (successive halving) with 3-fold CV. Shrink SVD to ~50 comps and n_iter=2. Use L1 + liblinear (binary) after SVD (way faster than saga here). For the tree, compress the categorical branch with OHE → SVD inside the ColumnTransformer (dramatically fewer features).
+
+The above actions allowed the models to converge and provide outputs on precision, recall, AUC-ROC, and F1-scores.  
 
 ## Model Evaluation
