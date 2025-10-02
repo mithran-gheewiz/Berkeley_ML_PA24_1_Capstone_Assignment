@@ -11,9 +11,22 @@ The dataset is huge containing three types of feature data: numerical, categoric
 
 ## Model Outcomes or Predictions
 
-### Table 1. Model Outcomes for Different models used (VotingClassifier, XGBoost, and RandomForest)
-### Caption: The best model surprisingly is VotingClassifier (SOFT, best-F1=0.70) compared it to the other Ensemble Models
+In the first part of the Capstone Project, as a baseline model, I used Logistic regression model - L1 regularization and Decision tree model (Tree depth (n=5))
+with Hyper parameter tuning for both logistic regression and decision tree. 
 
+Table 2 shows the results of the decision tree and the logistic regression using the best F1th and the baseline.
+
+                                Table 1 Baseline Model Evaluation
+                                Both baseline models were completely ineffective at detecting defects. 
+<img width="808" height="221" alt="image" src="https://github.com/user-attachments/assets/267f969b-6530-4f65-b941-0be445ca9368" />
+
+
+Logistic L1 is a completely ineffective model here. It collapses to predicting only the majority class. Low RMSE (0.0756) but useless in terms of classification metrics (especially recall/F1). The model is predicting all negatives (never predicts “1”). Since there are true positives in the data (115 positives), this means it completely missed them. Hence Recall = 0 and Precision = 0. Therefore, the logistic regression L1 cannot be used to make any predictions.
+
+For the decision tree model, by moving the threshold up to 0.9, the tree becomes more conservative (predicts fewer positives). This improves precision slightly but sacrifices recall. F1 is still very poor (0.09), but it beats the other setup.
+
+                      Table 2. Model Outcomes for Different models used (VotingClassifier, XGBoost, and RandomForest)
+                      The best model surprisingly is VotingClassifier (SOFT, best-F1=0.70) compared to the other Ensemble Models 
 | Model / Threshold Setting                 | AUC-ROC | Precision | Recall | F1 Score |
 | ----------------------------------------- | ------- | --------- | ------ | -------- |
 | **VotingClassifier (HARD)**               | 0.6680  | 0.0000    | 0.0000 | 0.0000   |
@@ -54,14 +67,21 @@ In the first part of the Capstone Project, I use the following baseline models i
 
 Logistic regression model - L1 regularization
 Decision tree model (Tree depth (n=5))
-Hyper parameter tuning for both logistic regression and decision tree
-When I first started out, the baseline model did not converge. Then, I performed dimensionality reduction before the classifier (often best for OHE-heavy data) and reran the program and its still running after 12 hours without completing the kernal. I determined that the bottlenecks are: (1) refitting OHE+SVD inside every CV fold, (2) too many candidates/folds, and (3) using a heavy solver on high-dim data. To make it run faster, I did the following: Tune on a stratified subset (30k rows), then refit best params on the full 100k. Use HalvingRandomSearchCV (successive halving) with 3-fold CV. Shrink SVD to ~50 comps and n_iter=2. Use L1 + liblinear (binary) after SVD (way faster than saga here). For the tree, compress the categorical branch with OHE → SVD inside the ColumnTransformer (dramatically fewer features).
+Hyper parameter tuning for both logistic regression and decision tree. 
 
-The above actions allowed the models to converge and provide outputs on precision, recall, AUC-ROC, and F1-scores.  
+When I first started out, the baseline model did not converge. Then, I performed dimensionality reduction before the classifier (often best for OHE-heavy data) and reran the program and its still running after 12 hours without completing the kernal. I determined that the bottlenecks are: refitting OHE+SVD inside every CV fold, too many candidates/folds, and using a heavy solver on high-dim data. To make it run faster, I did the following: Tune on a stratified subset (30k rows), then refit best params on the full 100k. Use HalvingRandomSearchCV (successive halving) with 3-fold CV. Shrink SVD to ~50 comps and n_iter=2. Use L1 + liblinear (binary) after SVD (which is way faster than saga here). For the tree, I compressed the categorical branch with OHE to SVD inside the ColumnTransformer (dramatically fewer features).
+
+The above actions allowed the models to converge and provide outputs on precision, recall, and F1-scores. 
+
+
+
 
 ## Model Evaluation
 
-# Why the VotingClassifier (SOFT) Outperformed XGBoost and Random Forest
+### Logistic Regression and Decision Tree does not make the cut
+
+
+### Why the VotingClassifier (SOFT) Outperformed XGBoost and Random Forest
 
 One of the main reasons the VotingClassifier (SOFT) outperformed XGBoost and Random Forest is the issue of class imbalance. In the dataset, the number of positive cases is much smaller than the number of negatives. Both Random Forest and XGBoost tend to optimize for accuracy and AUC, which often means predicting “negative” most of the time. This strategy minimizes errors overall but comes at the cost of missing true positives. As a result, their confusion matrices show very few false positives but also almost no true positives, making them overly conservative. For example, XGBoost at threshold 0.60 produced a confusion matrix of [TN=19856, FP=8, FN=117, TP=4], which means it only detected 4 true positives. Precision was relatively high, but recall collapsed to almost zero.
 
