@@ -73,12 +73,15 @@ When I first started out, the baseline model did not converge. Then, I performed
 
 The above actions allowed the models to converge and provide outputs on precision, recall, and F1-scores. 
 
+### Modeling subsection on VotingClassifier, XGBoost, RandomForest (UPDATE)
 
 
 
 ## Model Evaluation
 
-### Logistic Regression and Decision Tree does not make the cut
+### Logistic Regression and Decision Tree does not make the cut (UPDATE)
+
+### Precision, Recall Curves and AUC-ROC Curves (UPDATE)
 
 
 ### Why the VotingClassifier (SOFT) Outperformed XGBoost and Random Forest
@@ -92,3 +95,11 @@ A further reason is the contrast between overfitting and simplicity. XGBoost and
 Finally, threshold tuning played a key role. The performance of the VotingClassifier improved substantially when the threshold was adjusted from the default 0.50 to the best-F1 threshold of 0.70. This adjustment helped the model capture more positives without overwhelming the system with false positives. XGBoost and Random Forest did not benefit as much from threshold tuning because their predicted probabilities were already heavily skewed toward negatives, leaving little flexibility.
 
 In summary, while XGBoost and Random Forest are generally strong learners, in this particular imbalanced setting they behaved like “all negative” classifiers — protecting precision but sacrificing recall. The VotingClassifier (SOFT), by averaging two weaker but diverse models, created a smoother probability landscape. This allowed for better threshold adjustments, enabling it to capture a meaningful number of positives while keeping false positives under control.
+
+## Business Impact
+
+If the business objective is to maximize defect detection (catching faulty parts, fraudulent cases, or critical positives), VotingClassifier (SOFT, 0.70) is clearly superior.
+
+If the business objective were to minimize false alarms at all costs, XGBoost could be considered — but the trade-off is that nearly all positives would be missed, which is unacceptable in quality control or risk detection scenarios.
+
+Therefore the recommendation is to deploy the VotingClassifier (SOFT, 0.70) model which will be best at catching defective parts. 
