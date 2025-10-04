@@ -83,7 +83,7 @@ Soft voting + thresholding: With extreme class imbalance, probability averaging 
 
 This was followed by using the ensemble method XGBoost to see if the performance is better. It uses a preprocessing path for trees (no scaling), compresses high-cardinality OHE with SVD, tunes a small hyperparam space with HalvingRandomSearchCV, and then evaluates with both 0.5 and best-F1 thresholds. I had to first install XGBoost using the PIP install command. 
 Bosch categorical has huge cardinality; compressing OHE into ~100 components keeps XGBoost fast and memory-safe while still capturing signal. 
-I evaluate XGBoost on the same hold-out and with the same thresholding strategy you used for Logistic Regression/ Decision Tree/VoterClassfier, then sort by F1 to determine the best performing model.
+I evaluated XGBoost on the same hold-out and with the same thresholding strategy you used for Logistic Regression/ Decision Tree/VoterClassfier, then sort by F1 to determine the best performing model.
 
 After discussing with my learning facilitator, I built a model using Random Forest to compare the results with XGBoost, Voting Classifier and the other baseline models. I trimmed search space, uses HalvingRandomSearchCV, which lowered SVD size, increased category bucketing, and parallelized trees. The Random Forest pipeline matches the previous setups (median-impute nums, OHE to SVD for categoricals), does a wider RandomizedSearchCV on the 30k tuning subset, then evaluates on the validation split with both 0.5 and best-F1 thresholds.
 
