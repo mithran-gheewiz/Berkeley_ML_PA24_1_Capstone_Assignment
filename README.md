@@ -74,19 +74,21 @@ When I first started out, the baseline model did not converge. Then, I performed
 
 The above actions allowed the models to converge and provide outputs on precision, recall, and F1-scores. The discussion of the baseline modeling will be done in Model Evaluation section.
 
-### Modeling subsection on VotingClassifier, XGBoost, RandomForest (UPDATE)
+### Modeling subsection on VotingClassifier, XGBoost, RandomForest
 Based on the Module 20 lesson on Voting Classifier, I determined if adding a Voting Classifier will help improve the F1 and precision/recall scores. I investigated both Hard and Soft voting. Since decision tree performed better than logistic regression, I decided to weight it 3:1 in favor of decision tree. By combining two weaks models, I am hoping to get better results. The voting classifier models included both hard and soft voting.
 
 Pipelines inside the voter: best_logit and best_tree already encapsulate imputation, scaling/OHE, SVD. Ensembling them directly keeps preprocessing consistent and prevents leakage.
 Soft voting + thresholding: With extreme class imbalance, probability averaging plus an optimized decision threshold typically beats hard voting at F1/recall. After changing weights, I retuned the decision threshold on X_val (0.5 to 0.7 for best threshold) to squeeze out more from F1/recall/precision. 
 
+This was followed by using the ensemble method XGBoost to see if the performance is better. It uses a preprocessing path for trees (no scaling), compresses high-cardinality OHE with SVD, tunes a small hyperparam space with HalvingRandomSearchCV, and then evaluates with both 0.5 and best-F1 thresholds. I had to first install XGBoost using the PIP install command. 
+Bosch categorical has huge cardinality; compressing OHE into ~100 components keeps XGBoost fast and memory-safe while still capturing signal. 
+I evaluate XGBoost on the same hold-out and with the same thresholding strategy you used for Logistic Regression/ Decision Tree/VoterClassfier, then sort by F1 to determine the best performing model.
 
-
-
+After discussing with my learning facilitator, I built a model using Random Forest to compare the results with XGBoost, Voting Classifier and the other baseline models. I trimmed search space, uses HalvingRandomSearchCV, which lowered SVD size, increased category bucketing, and parallelized trees. The Random Forest pipeline matches the previous setups (median-impute nums, OHE to SVD for categoricals), does a wider RandomizedSearchCV on the 30k tuning subset, then evaluates on the validation split with both 0.5 and best-F1 thresholds.
 
 ## Model Evaluation
 
-### Logistic Regression and Decision Tree does not make the cut (UPDATE)
+### Logistic Regression and Decision Tree does not make the cut
 
 ### Precision, Recall Curves and AUC-ROC Curves (UPDATE)
 
