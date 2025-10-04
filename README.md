@@ -161,5 +161,5 @@ Since the business objective is to maximize defect detection (catching faulty/de
 
 In a different business setting, if the business objective are to minimize false alarms at all costs, XGBoost could be considered — but the trade-off is that nearly all positives would be missed, which is unacceptable in quality control or risk detection scenarios.
 
-Therefore the recommendation is to deploy the VotingClassifier (SOFT, 0.70) model which will be best at catching defective parts, has the best trade off between Precision ~0.12 with Recall ~0.23, and has the best F1 Score ~0.156. Compared to the other models, this model will likely detect 23% of the defects versus the other instead only detect less than 5%. The model VotingClassifier (SOFT, 0.70)  also performs better than random chance like the other ensemble models with an AUC score of 0.668.
+Therefore the recommendation is to deploy the VotingClassifier (SOFT, 0.70) model which will be best at catching defective parts, has the best trade off between Precision ~0.12 with Recall ~0.23, and has the best F1 Score ~0.156. Compared to the other models, this model will likely detect 23% of the defects versus the other instead only detect less than 7%. The model VotingClassifier (SOFT, 0.70)  also performs better than random chance like the other ensemble models with an AUC score of 0.668.
 
