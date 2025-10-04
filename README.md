@@ -2,7 +2,7 @@
 # Link to Python notebooks: 
 
 ## Introduction and Problem Statement
-The problem that I am intending to solve is to build a predictive model that can determine if Bosch parts in a sequence of manufacturing operations through multiple stations can be deemed a good part or a defective part.  I intend to address the question of whether the precision, recall, AUC-ROC, and F1-score between the predicted and observed responses falls within an acceptable range for the test dataset. These metrics are performance metrics that takes into account true and false positives and negatives, and is especially useful for imbalanced classification problems.
+The problem that I am intending to solve is to build a predictive model that can determine if parts in a sequence of manufacturing operations of a leading Automotive Tier-1 supplier through multiple stations can be deemed a good part or a defective part.  I intend to address the question of whether the precision, recall, AUC-ROC, and F1-score between the predicted and observed responses falls within an acceptable range for the test dataset. These metrics are performance metrics that takes into account true and false positives and negatives, and is especially useful for imbalanced classification problems.
 
 The data set is from the Bosch Kaggle competition. The data is sourced from Kaggle. https://www.kaggle.com/competitions/bosch-production-line-performance/overview
 
@@ -63,6 +63,7 @@ Similarly, I also randomly sampled 30,000 rows from the test data sets with the 
 ## Data Preprocessing/Preparation
 
 ## Modeling
+### Baseline Modeling - Logistic Regression and Decision Tree
 In the first part of the Capstone Project, I use the following baseline models in the analysis:
 
 Logistic regression model - L1 regularization
@@ -71,9 +72,15 @@ Hyper parameter tuning for both logistic regression and decision tree.
 
 When I first started out, the baseline model did not converge. Then, I performed dimensionality reduction before the classifier (often best for OHE-heavy data) and reran the program and its still running after 12 hours without completing the kernal. I determined that the bottlenecks are: refitting OHE+SVD inside every CV fold, too many candidates/folds, and using a heavy solver on high-dim data. To make it run faster, I did the following: Tune on a stratified subset (30k rows), then refit best params on the full 100k. Use HalvingRandomSearchCV (successive halving) with 3-fold CV. Shrink SVD to ~50 comps and n_iter=2. Use L1 + liblinear (binary) after SVD (which is way faster than saga here). For the tree, I compressed the categorical branch with OHE to SVD inside the ColumnTransformer (dramatically fewer features).
 
-The above actions allowed the models to converge and provide outputs on precision, recall, and F1-scores. 
+The above actions allowed the models to converge and provide outputs on precision, recall, and F1-scores. The discussion of the baseline modeling will be done in Model Evaluation section.
 
 ### Modeling subsection on VotingClassifier, XGBoost, RandomForest (UPDATE)
+Based on the Module 20 lesson on Voting Classifier, I determined if adding a Voting Classifier will help improve the F1 and precision/recall scores. I investigated both Hard and Soft voting. Since decision tree performed better than logistic regression, I decided to weight it 3:1 in favor of decision tree. By combining two weaks models, I am hoping to get better results. The voting classifier models included both hard and soft voting.
+
+Pipelines inside the voter: best_logit and best_tree already encapsulate imputation, scaling/OHE, SVD. Ensembling them directly keeps preprocessing consistent and prevents leakage.
+Soft voting + thresholding: With extreme class imbalance, probability averaging plus an optimized decision threshold typically beats hard voting at F1/recall. After changing weights, I retuned the decision threshold on X_val (0.5 to 0.7 for best threshold) to squeeze out more from F1/recall/precision. 
+
+
 
 
 
