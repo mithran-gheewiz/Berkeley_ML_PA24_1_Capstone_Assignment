@@ -1,8 +1,8 @@
 # Berkeley_ML_PA24_1_Capstone_Assignment
 ## Links to Python notebooks: 
-### Capstone_Project_Bosch_Production_Line_ver06_Data_Checks_and_EDA.ipynb
-### Capstone_Project_Bosch_Production_Line_ver07_PreProcessing_Modeling_Eval.ipynb
-### Capstone_Project_Bosch_Production_Line_ver07_Performance_Graphs.ipynb
+1. Capstone_Project_Bosch_Production_Line_ver06_Data_Checks_and_EDA.ipynb https://github.com/mithran-gheewiz/Berkeley_ML_PA24_1_Capstone_Assignment/blob/main/Capstone_Project_Bosch_Production_Line_ver06_Data_Checks_and_EDA.ipynb
+2. Capstone_Project_Bosch_Production_Line_ver07_PreProcessing_Modeling_Eval.ipynb https://github.com/mithran-gheewiz/Berkeley_ML_PA24_1_Capstone_Assignment/blob/main/Capstone_Project_Bosch_Production_Line_ver07_Performance_Graphs.ipynb
+3. Capstone_Project_Bosch_Production_Line_ver07_Performance_Graphs.ipynb https://github.com/mithran-gheewiz/Berkeley_ML_PA24_1_Capstone_Assignment/blob/main/Capstone_Project_Bosch_Production_Line_ver07_PreProcessing_Modeling_Eval.ipynb 
    
 ## References: Géron, A. (2023). Hands-on machine learning with Scikit-Learn, Keras, and TensorFlow (3rd ed.). O’Reilly Media.
 
