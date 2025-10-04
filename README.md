@@ -18,6 +18,7 @@ Table 2 shows the results of the decision tree and the logistic regression using
 
                                 Table 1 Baseline Model Evaluation
                                 Both baseline models were completely ineffective at detecting defects. 
+                                
 <img width="808" height="221" alt="image" src="https://github.com/user-attachments/assets/267f969b-6530-4f65-b941-0be445ca9368" />
 
 
@@ -97,7 +98,9 @@ For the decision tree model, by moving the threshold up to 0.9, the tree becomes
 
         Fig. 1. Confusion Matrix of the models showing that the Voting Classifier (SOFT threshold, @ 0.70) performed the best by catching more actual positives (26 true positives) than XGBoost or Random Forest.
         And, keeps false positives manageable (195 out of ~20k).
-        <img width="1105" height="828" alt="image" src="https://github.com/user-attachments/assets/a8615019-0a2c-4c15-b4e4-bc14ab4e1f3c" />
+       
+        
+  <img width="1105" height="828" alt="image" src="https://github.com/user-attachments/assets/a8615019-0a2c-4c15-b4e4-bc14ab4e1f3c" />
 
 
 ### Why the VotingClassifier (SOFT) Outperformed XGBoost and Random Forest
