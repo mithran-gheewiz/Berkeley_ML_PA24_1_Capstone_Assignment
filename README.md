@@ -94,13 +94,29 @@ Logistic L1 is a completely ineffective model here. It collapses to predicting o
 
 For the decision tree model, by moving the threshold up to 0.9, the tree becomes more conservative (predicts fewer positives). This improves precision slightly but sacrifices recall. F1 is still very poor (0.09), but it beats Logistic Regression. This model also cannot be used to make any useful predictions on defective parts.
 
-### Precision, Recall Curves and AUC-ROC Curves (UPDATE)
+### Precision, Recall Curves and AUC-ROC Curves for Voting Classifier, XGBoost and Random Forest
 
         Fig. 1. Confusion Matrix of the models showing that the Voting Classifier (SOFT threshold, @ 0.70) performed the best by catching more actual positives (26 true positives) than XGBoost or Random Forest.
         And, keeps false positives manageable (195 out of ~20k).
        
         
   <img width="1105" height="828" alt="image" src="https://github.com/user-attachments/assets/a8615019-0a2c-4c15-b4e4-bc14ab4e1f3c" />
+
+- VotingClassifier (SOFT @ 0.70) captures more true positives (top-right) while keeping false positives moderate.
+- XGBoost almost never predicts positives (tiny TP count, very few FPs).
+- Random Forest struggles, either predicting none (0.50) or adding many false positives without enough true positives (0.24).
+This visualization reinforces why the VotingClassifier (SOFT, best-F1) is the strongest option.
+
+
+        Fig. 2. ROC curve comparison for VotingClassifier (SOFT), XGBoost, and Random Forest. VotingClassifier (SOFT) clearly sits above the other two curves, reflecting its higher AUC (0.668).
+
+<img width="779" height="539" alt="image" src="https://github.com/user-attachments/assets/237bfb49-1a60-43c2-9fc1-05e29ce7648d" />
+
+
+- VotingClassifier (SOFT) clearly sits above the other two curves, reflecting its higher AUC (0.668).
+- XGBoost (0.575) and Random Forest (0.584) are only slightly better than random guessing (AUC = 0.5).
+
+This shows why the VotingClassifier gave a better trade-off between sensitivity (recall - 0.23, versus XGBoost recall - 0.03, and Random Forest recall - 0.07) and specificity, and why threshold tuning helped it outperform the others.
 
 
 ### Why the VotingClassifier (SOFT) Outperformed XGBoost and Random Forest
