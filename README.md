@@ -132,7 +132,7 @@ This shows why the VotingClassifier gave a better trade-off between sensitivity 
 
 This visual confirms that only the VotingClassifier (SOFT) provided usable trade-offs on the ROC curve, while the other ensembles defaulted to predicting negatives too aggressively.
 
-      Fig. 4. Precision-Recall curve (operating points). 
+      Fig. 4. Precision-Recall curve (operating points). VotingClassifier (SOFT @ 0.70) is the best with Precision ~0.12 with Recall ~0.23 — better balance than the others.
 <img width="987" height="534" alt="image" src="https://github.com/user-attachments/assets/538fb333-9166-4924-b4b5-3b9c5ca03ab8" />
 
 - VotingClassifier (SOFT @ 0.70) again stands out:
