@@ -1,6 +1,6 @@
 # Berkeley_ML_PA24_1_Capstone_Assignment
-# Link to Python notebooks (UPDATE): 
-# References(UPDATE): 
+## Link to Python notebooks (UPDATE): 
+## References(UPDATE): 
 
 ## Introduction and Problem Statement
 The problem that I am intending to solve is to build a predictive model that can determine if parts in a sequence of manufacturing operations of a leading Automotive Tier-1 supplier through multiple stations can be deemed a good part or a defective part.  I intend to address the question of whether the precision, recall, AUC-ROC, and F1-score between the predicted and observed responses falls within an acceptable range for the test dataset. These metrics are performance metrics that takes into account true and false positives and negatives, and is especially useful for imbalanced classification problems.
