@@ -156,7 +156,7 @@ In summary, while XGBoost and Random Forest are generally strong learners, in th
 
 ## Business Impact
 
-Manufacturing companies pay particular attention to defective parts to ensure that these parts do not land in customers' hands. The ramifications of defective parts going out of a factory can be significant to any company that manufactures parts. These include costly product recall, loss of reputation and financial loss.
+Manufacturing companies pay particular attention to defective parts to ensure that these parts do not land in customers' hands. The ramifications of defective parts going out of a factory can be significant to any company that manufactures parts. These include costly product recall, loss of reputation and loss of future business.
 Since the business objective is to maximize defect detection (catching faulty/defective parts), VotingClassifier (SOFT, 0.70) is clearly superior as discussed in the modeling evaluation section. 
 
 In a different business setting, if the business objective are to minimize false alarms at all costs, XGBoost could be considered — but the trade-off is that nearly all positives would be missed, which is unacceptable in quality control or risk detection scenarios.
