@@ -119,6 +119,29 @@ This visualization reinforces why the VotingClassifier (SOFT, best-F1) is the st
 This shows why the VotingClassifier gave a better trade-off between sensitivity (recall - 0.23, versus XGBoost recall - 0.03, and Random Forest recall - 0.07) and specificity, and why threshold tuning helped it outperform the others.
 
 
+
+      Fig. 3. ROC curve comparison again — with colored dots showing where each model’s chosen threshold lands. VotingClassifier (SOFT @ 0.70) sits in a better region: higher recall than XGBoost/RandomForest
+      
+<img width="1113" height="619" alt="image" src="https://github.com/user-attachments/assets/0990cab9-3b4d-41ce-a8ba-358782a8a204" />
+
+
+- VotingClassifier (SOFT @ 0.70) sits in a better region: higher recall than XGBoost/RandomForest with moderate false positives.
+- XGBoost points are way down near the x-axis — almost zero recall, which explains why it missed nearly all positives.
+- Random Forest also clusters near the baseline with very low recall.
+- VotingClassifier (SOFT @ 0.50) has higher recall but at the cost of more false positives.
+
+This visual confirms that only the VotingClassifier (SOFT) provided usable trade-offs on the ROC curve, while the other ensembles defaulted to predicting negatives too aggressively.
+
+      Fig. 4. Precision-Recall curve (operating points). 
+<img width="987" height="534" alt="image" src="https://github.com/user-attachments/assets/538fb333-9166-4924-b4b5-3b9c5ca03ab8" />
+
+- VotingClassifier (SOFT @ 0.70) again stands out:
+- Precision ~0.12 with Recall ~0.23 — better balance than the others.
+- XGBoost points are high precision but very low recall (bottom-left corner) → it only catches a handful of positives.
+- Random Forest sits near the baseline, barely above random guessing.
+- VotingClassifier (SOFT @ 0.50) trades higher recall (~0.27) for very low precision (~0.03).
+
+
 ### Why the VotingClassifier (SOFT) Outperformed XGBoost and Random Forest
 
 One of the main reasons the VotingClassifier (SOFT) outperformed XGBoost and Random Forest is the issue of class imbalance. In the dataset, the number of positive cases is much smaller than the number of negatives. Both Random Forest and XGBoost tend to optimize for accuracy and AUC, which often means predicting “negative” most of the time. This strategy minimizes errors overall but comes at the cost of missing true positives. As a result, their confusion matrices show very few false positives but also almost no true positives, making them overly conservative. For example, XGBoost at threshold 0.60 produced a confusion matrix of [TN=19856, FP=8, FN=117, TP=4], which means it only detected 4 true positives. Precision was relatively high, but recall collapsed to almost zero.
@@ -133,10 +156,11 @@ In summary, while XGBoost and Random Forest are generally strong learners, in th
 
 ## Business Impact
 
-If the business objective is to maximize defect detection (catching faulty parts, fraudulent cases, or critical positives), VotingClassifier (SOFT, 0.70) is clearly superior.
+Manufacturing companies pay particular attention to defective parts to ensure that these parts do not and that in customers hands. The ramifications of defective parts going out of a factory can be significant to any company that manufactures parts. These include costly product recall, loss of reputation and financial loss.
+Since the business objective is to maximize defect detection (catching faulty/defective parts), VotingClassifier (SOFT, 0.70) is clearly superior as discussed in the modeling evaluation section
 
-If the business objective were to minimize false alarms at all costs, XGBoost could be considered — but the trade-off is that nearly all positives would be missed, which is unacceptable in quality control or risk detection scenarios.
+In a different business setting, if the business objective were to minimize false alarms at all costs, XGBoost could be considered — but the trade-off is that nearly all positives would be missed, which is unacceptable in quality control or risk detection scenarios.
 
-Therefore the recommendation is to deploy the VotingClassifier (SOFT, 0.70) model which will be best at catching defective parts. 
+Therefore the recommendation is to deploy the VotingClassifier (SOFT, 0.70) model which will be best at catching defective parts, has the best trade off between Precision ~0.12 with Recall ~0.23, and has the best F1 Score ~0.156. Compared to the other models, this model will likely detect 23% of the defects versus the other instead only detect less than 1%. This model also performs better than chance like the other ensemble models with an AUC score of 0.668.
 
 ## Conclusion
