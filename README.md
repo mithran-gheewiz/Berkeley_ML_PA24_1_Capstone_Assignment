@@ -1,9 +1,9 @@
 # Berkeley_ML_PA24_1_Capstone_Assignment
 ## Links to Python notebooks: 
 1. Capstone_Project_Bosch_Production_Line_ver06_Data_Checks_and_EDA.ipynb https://github.com/mithran-gheewiz/Berkeley_ML_PA24_1_Capstone_Assignment/blob/main/Capstone_Project_Bosch_Production_Line_ver06_Data_Checks_and_EDA.ipynb
-2. Capstone_Project_Bosch_Production_Line_ver07_PreProcessing_Modeling_Eval.ipynb https://github.com/mithran-gheewiz/Berkeley_ML_PA24_1_Capstone_Assignment/blob/main/Capstone_Project_Bosch_Production_Line_ver07_Performance_Graphs.ipynb
-3. Capstone_Project_Bosch_Production_Line_ver07_Performance_Graphs.ipynb https://github.com/mithran-gheewiz/Berkeley_ML_PA24_1_Capstone_Assignment/blob/main/Capstone_Project_Bosch_Production_Line_ver07_PreProcessing_Modeling_Eval.ipynb 
-   
+2. Capstone_Project_Bosch_Production_Line_ver07_PreProcessing_Modeling_Eval.ipynb https://github.com/mithran-gheewiz/Berkeley_ML_PA24_1_Capstone_Assignment/blob/main/Capstone_Project_Bosch_Production_Line_ver07_PreProcessing_Modeling_Eval.ipynb 
+3. Capstone_Project_Bosch_Production_Line_ver07_Performance_Graphs.ipynb https://github.com/mithran-gheewiz/Berkeley_ML_PA24_1_Capstone_Assignment/blob/main/Capstone_Project_Bosch_Production_Line_ver07_Performance_Graphs.ipynb
+
 
 ## Introduction and Problem Statement
 The problem that I am intending to solve is to build a predictive model that can determine if parts in a sequence of manufacturing operations of a leading Automotive Tier-1 supplier through multiple stations can be deemed a good part or a defective part.  I intend to address the question of whether the precision, recall, AUC-ROC, and F1-score between the predicted and observed responses falls within an acceptable range for the test dataset. These metrics are performance metrics that takes into account true and false positives and negatives, and is especially useful for imbalanced classification problems.
