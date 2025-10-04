@@ -112,3 +112,5 @@ If the business objective is to maximize defect detection (catching faulty parts
 If the business objective were to minimize false alarms at all costs, XGBoost could be considered — but the trade-off is that nearly all positives would be missed, which is unacceptable in quality control or risk detection scenarios.
 
 Therefore the recommendation is to deploy the VotingClassifier (SOFT, 0.70) model which will be best at catching defective parts. 
+
+## Conclusion
