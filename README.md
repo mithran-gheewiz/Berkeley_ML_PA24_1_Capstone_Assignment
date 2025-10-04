@@ -89,8 +89,15 @@ After discussing with my learning facilitator, I built a model using Random Fore
 ## Model Evaluation
 
 ### Logistic Regression and Decision Tree does not make the cut
+Logistic L1 is a completely ineffective model here. It collapses to predicting only the majority class. Low RMSE (0.0756) but useless in terms of classification metrics (especially recall/F1). The model is predicting all negatives (never predicts “1”). Since there are true positives in the data (115 positives), this means it completely missed them. Hence Recall = 0 and Precision = 0. Therefore, the logistic regression L1 cannot be used to make any predictions.
+
+For the decision tree model, by moving the threshold up to 0.9, the tree becomes more conservative (predicts fewer positives). This improves precision slightly but sacrifices recall. F1 is still very poor (0.09), but it beats Logistic Regression. This model also cannot be used to make any useful predictions on defective parts.
 
 ### Precision, Recall Curves and AUC-ROC Curves (UPDATE)
+
+        Fig. 1. Confusion Matrix of the models showing that the Voting Classifier (SOFT threshold, @ 0.70) performed the best by catching more actual positives (26 true positives) than XGBoost or Random Forest.
+        And, keeps false positives manageable (195 out of ~20k).
+        <img width="1105" height="828" alt="image" src="https://github.com/user-attachments/assets/a8615019-0a2c-4c15-b4e4-bc14ab4e1f3c" />
 
 
 ### Why the VotingClassifier (SOFT) Outperformed XGBoost and Random Forest
