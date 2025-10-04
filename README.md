@@ -156,11 +156,10 @@ In summary, while XGBoost and Random Forest are generally strong learners, in th
 
 ## Business Impact
 
-Manufacturing companies pay particular attention to defective parts to ensure that these parts do not and that in customers hands. The ramifications of defective parts going out of a factory can be significant to any company that manufactures parts. These include costly product recall, loss of reputation and financial loss.
-Since the business objective is to maximize defect detection (catching faulty/defective parts), VotingClassifier (SOFT, 0.70) is clearly superior as discussed in the modeling evaluation section
+Manufacturing companies pay particular attention to defective parts to ensure that these parts do not land in customers' hands. The ramifications of defective parts going out of a factory can be significant to any company that manufactures parts. These include costly product recall, loss of reputation and financial loss.
+Since the business objective is to maximize defect detection (catching faulty/defective parts), VotingClassifier (SOFT, 0.70) is clearly superior as discussed in the modeling evaluation section. 
 
-In a different business setting, if the business objective were to minimize false alarms at all costs, XGBoost could be considered — but the trade-off is that nearly all positives would be missed, which is unacceptable in quality control or risk detection scenarios.
+In a different business setting, if the business objective are to minimize false alarms at all costs, XGBoost could be considered — but the trade-off is that nearly all positives would be missed, which is unacceptable in quality control or risk detection scenarios.
 
-Therefore the recommendation is to deploy the VotingClassifier (SOFT, 0.70) model which will be best at catching defective parts, has the best trade off between Precision ~0.12 with Recall ~0.23, and has the best F1 Score ~0.156. Compared to the other models, this model will likely detect 23% of the defects versus the other instead only detect less than 1%. This model also performs better than chance like the other ensemble models with an AUC score of 0.668.
+Therefore the recommendation is to deploy the VotingClassifier (SOFT, 0.70) model which will be best at catching defective parts, has the best trade off between Precision ~0.12 with Recall ~0.23, and has the best F1 Score ~0.156. Compared to the other models, this model will likely detect 23% of the defects versus the other instead only detect less than 5%. The model VotingClassifier (SOFT, 0.70)  also performs better than random chance like the other ensemble models with an AUC score of 0.668.
 
-## Conclusion
