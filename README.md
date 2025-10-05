@@ -93,6 +93,9 @@ After discussing with my learning facilitator, I built a model using Random Fore
 
 ## Model Evaluation
 
+### Type of learning 
+In the Bosch project, the model outcomes or predictions are generated through a supervised learning approach, where the goal is to predict whether a manufactured part is defective or not. Although the modeling task is framed as a regression problem in terms of learning continuous probability scores, the final output is evaluated using a classification framework. Specifically, the expected output of the selected model is a confusion matrix, which helps assess the model’s performance by showing the number of True Positives, True Negatives, False Positives, and False Negatives. This allows the team to measure how effectively the model identifies defective parts while minimizing false alarms. Through this supervised learning setup, the model learns from labeled historical production data to make accurate predictions on new, unseen parts.
+
 ### Logistic Regression and Decision Tree does not make the cut
 Logistic L1 is a completely ineffective model here. It collapses to predicting only the majority class. Low RMSE (0.0756) but useless in terms of classification metrics (especially recall/F1). The model is predicting all negatives (never predicts “1”). Since there are true positives in the data (115 positives), this means it completely missed them. Hence Recall = 0 and Precision = 0. Therefore, the logistic regression L1 cannot be used to make any predictions.
 
